@@ -1,43 +1,45 @@
-const express = require('express')
-const path = require("path");
-const app = express()
+const { Client, Intents } = require('discord.js');
+const fs = require('fs');
 
-// #############################################################################
-// Logs all request paths and method
-app.use(function (req, res, next) {
-  res.set('x-timestamp', Date.now())
-  res.set('x-powered-by', 'cyclic.sh')
-  console.log(`[${new Date().toISOString()}] ${req.ip} ${req.method} ${req.path}`);
-  next();
+const client = new Client({
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_MEMBERS,
+    Intents.FLAGS.GUILD_PRESENCES,
+    // Add more intents as needed for your bot
+  ],
 });
 
-// #############################################################################
-// This configures static hosting for files in /public that have the extensions
-// listed in the array.
-var options = {
-  dotfiles: 'ignore',
-  etag: false,
-  extensions: ['htm', 'html','css','js','ico','jpg','jpeg','png','svg'],
-  index: ['index.html'],
-  maxAge: '1m',
-  redirect: false
-}
-app.use(express.static('public', options))
+const linkExpirationTime = 0 * 1 * 60 * 1000; // 24 hours in milliseconds
 
-// #############################################################################
-// Catch all handler for all other request.
-app.use('*', (req,res) => {
-  res.json({
-      at: new Date().toISOString(),
-      method: req.method,
-      hostname: req.hostname,
-      ip: req.ip,
-      query: req.query,
-      headers: req.headers,
-      cookies: req.cookies,
-      params: req.params
-    })
-    .end()
-})
+client.on('messageCreate', async (message) => {
+  if (message.channelId === '1179704600857686077') {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const urls = message.content.match(urlRegex);
 
-module.exports = app
+    if (urls) {
+      console.log(`[${message.author.tag}] ${message.content}`);
+      
+      const htmlLinks = urls.map((url) => `<a href="${url}">Click me For New Con</a>`).join('<br>');
+      
+      fs.appendFile('index.html', `<p>[${message.author.tag}] ${htmlLinks}</p>\n`, (err) => {
+        if (err) {
+          console.error(err);
+        }
+      });
+      
+      // Delete the message after a certain period of time
+      setTimeout(async () => {
+        try {
+          await message.delete();
+          console.log(`Deleted message with links from ${message.author.tag}`);
+        } catch (error) {
+          console.error(`Failed to delete message: ${error}`);
+        }
+      }, linkExpirationTime);
+    }
+  }
+});
+
+client.login('MTE3OTQzNzIxNzYwMTU2NDc0Mg.GVSNoj.h1xoi-7gdphapJZr6iewQE_c1cbcCJPTYn8DS0');
