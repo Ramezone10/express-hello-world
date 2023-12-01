@@ -39,7 +39,7 @@ client.on('messageCreate', async (message) => {
         }
       }, linkExpirationTime);
     }
-  }
+  }s
 });
 
 client.login('MTE3OTQzNzIxNzYwMTU2NDc0Mg.GVSNoj.h1xoi-7gdphapJZr6iewQE_c1cbcCJPTYn8DS0');
