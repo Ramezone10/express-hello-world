@@ -29,11 +29,7 @@
   "author": "Cyclic Software",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cyclic-software/express-hello-world/issues"
-  },
-  "homepage": "https://github.com/cyclic-software/express-hello-world#readme",
-  "dependencies": {
-    "express": "^4.18.2"
+    "url": "https://github.com/cyclic-software/express-hello-world/issues
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
