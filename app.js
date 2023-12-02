@@ -5,16 +5,14 @@ const client = new Client({
   intents: [
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_MEMBERS,
-    Intents.FLAGS.GUILD_PRESENCES,
     // Add more intents as needed for your bot
   ],
 });
 
 const linkExpirationTime = 0 * 1 * 60 * 1000; // 24 hours in milliseconds
 
-client.on('messageCreate', async (message) => {
-  if (message.channelId === '1179704600857686077') {
+client.on('message', async (message) => {
+  if (message.channel.id === '1179704600857686077') {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     const urls = message.content.match(urlRegex);
 
@@ -42,4 +40,4 @@ client.on('messageCreate', async (message) => {
   }
 });
 
-client.login('MTE3OTQzNzIxNzYwMTU2NDc0Mg.GVSNoj.h1xoi-7gdphapJZr6iewQE_c1cbcCJPTYn8DS0');
+client.login('OTEzMzU3NzQ1NDIyNDk1NzU0.GW_V0E._8nq4aCeu9TJNkT37ySj_noNp5OMbW7JYczPrU');
