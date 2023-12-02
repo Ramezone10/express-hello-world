@@ -22,11 +22,6 @@
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Cyclic Software",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cyclic-software/express-hello-world/issues
-  },
   "devDependencies": {
     "nodemon": "^2.0.22"
   }
